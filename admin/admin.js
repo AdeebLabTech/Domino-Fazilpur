@@ -35,7 +35,7 @@
   // --- Auth gate ---
   async function checkSession() {
     try {
-      const res = await fetch('/api/session');
+      const res = await fetch('/api/session', { credentials: 'same-origin', cache: 'no-store' });
       const data = await res.json();
       if (!data.authenticated) {
         window.location.href = '/admin/login.html';
@@ -53,7 +53,7 @@
   // --- Load menu data ---
   async function loadMenu() {
     try {
-      const res = await fetch('/api/menu', { cache: 'no-store' });
+      const res = await fetch('/api/menu', { cache: 'no-store', credentials: 'same-origin' });
       if (!res.ok) throw new Error('Failed to load menu (status ' + res.status + ')');
       menuData = await res.json();
       computeNextId();
@@ -123,14 +123,29 @@
     titleInput.value = category.title || '';
     idInput.value = category.categoryId || '';
 
-    titleInput.addEventListener('input', () => { category.title = titleInput.value; });
-    idInput.addEventListener('input', () => { category.categoryId = idInput.value.trim(); });
+    titleInput.addEventListener('input', () => {
+      category.title = titleInput.value;
+      const baseId = titleInput.value
+        .trim()
+        .toLowerCase()
+        .replace(/&/g, ' and ')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '') || 'category';
+      let generatedId = baseId;
+      let suffix = 2;
+      while (menuData.some((entry) => entry !== category && entry.categoryId === generatedId)) {
+        generatedId = `${baseId}-${suffix++}`;
+      }
+      category.categoryId = generatedId;
+      idInput.value = generatedId;
+    });
 
     (category.items || []).forEach((item) => {
       itemsGrid.appendChild(renderItem(item, category));
     });
 
     addItemBtn.addEventListener('click', () => {
+      if (!Array.isArray(category.items)) category.items = [];
       const newItem = {
         id: nextId++,
         name: '',
@@ -141,7 +156,11 @@
         variants: [],
       };
       category.items.push(newItem);
-      itemsGrid.appendChild(renderItem(newItem, category));
+      const newItemNode = renderItem(newItem, category);
+      itemsGrid.appendChild(newItemNode);
+      const nameField = newItemNode.querySelector('.item-name-input');
+      if (nameField) nameField.focus();
+      showBanner('New item added. Complete its details, then click Save Changes.', 'success');
     });
 
     deleteCategoryBtn.addEventListener('click', () => {
@@ -161,6 +180,9 @@
     const nameInput = node.querySelector('.item-name-input');
     const descInput = node.querySelector('.item-desc-input');
     const hasVariantsInput = node.querySelector('.item-hasvariants-input');
+    const optionsToggleBtn = node.querySelector('.options-toggle-btn');
+    const optionsToggleIcon = node.querySelector('.options-toggle-icon');
+    const optionsToggleText = node.querySelector('.options-toggle-text');
     const priceRow = node.querySelector('.item-price-row');
     const priceInput = node.querySelector('.item-price-input');
     const badgeInput = node.querySelector('.item-badge-input');
@@ -169,8 +191,6 @@
     const addVariantBtn = node.querySelector('.add-variant-btn');
     const presetBtns = node.querySelectorAll('.preset-btn');
     const variantsBadgeInput = node.querySelector('.item-badge-input-variants');
-    const priceFromLabel = node.querySelector('.pricefrom-label');
-    const priceFromInput = node.querySelector('.item-pricefrom-input');
     const discountToggleLabel = node.querySelector('.discount-toggle-label');
     const discountInput = node.querySelector('.item-discount-input');
     const discountRow = node.querySelector('.item-discount-row');
@@ -185,7 +205,6 @@
     priceInput.value = item.price != null ? item.price : '';
     badgeInput.value = item.badge || '';
     variantsBadgeInput.value = item.badge || '';
-    priceFromInput.checked = !!item.priceFrom;
     bestDealInput.checked = !!item.bestDeal;
     discountInput.checked = item.oldPrice != null;
     oldPriceInput.value = item.oldPrice != null ? item.oldPrice : '';
@@ -199,10 +218,13 @@
     function syncVariantsVisibility() {
       const on = hasVariantsInput.checked;
       priceRow.classList.toggle('hidden', on);
-      priceFromLabel.classList.toggle('hidden', on);
       discountToggleLabel.classList.toggle('hidden', on);
       discountRow.classList.toggle('hidden', on || !discountInput.checked);
       variantsSection.classList.toggle('hidden', !on);
+      optionsToggleBtn.classList.toggle('active', on);
+      optionsToggleBtn.setAttribute('aria-expanded', String(on));
+      optionsToggleIcon.textContent = on ? '−' : '+';
+      optionsToggleText.textContent = on ? 'Remove Options' : 'Add Options';
     }
     syncVariantsVisibility();
 
@@ -260,6 +282,11 @@
       });
     });
 
+    optionsToggleBtn.addEventListener('click', () => {
+      hasVariantsInput.checked = !hasVariantsInput.checked;
+      hasVariantsInput.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+
     hasVariantsInput.addEventListener('change', () => {
       if (hasVariantsInput.checked) {
         if (item.variants.length === 0) {
@@ -291,10 +318,6 @@
     variantsBadgeInput.addEventListener('input', () => {
       item.badge = variantsBadgeInput.value.trim() || null;
       badgeInput.value = variantsBadgeInput.value;
-    });
-    priceFromInput.addEventListener('change', () => {
-      if (priceFromInput.checked) item.priceFrom = true;
-      else delete item.priceFrom;
     });
     discountInput.addEventListener('change', () => {
       discountRow.classList.toggle('hidden', !discountInput.checked);
@@ -412,6 +435,8 @@
     try {
       const res = await fetch('/api/menu', {
         method: 'PUT',
+        credentials: 'same-origin',
+        cache: 'no-store',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(menuData),
       });
@@ -480,7 +505,7 @@
 
   // --- Logout ---
   document.getElementById('logout-btn').addEventListener('click', async () => {
-    await fetch('/api/logout', { method: 'POST' });
+    await fetch('/api/logout', { method: 'POST', credentials: 'same-origin' });
     window.location.href = '/admin/login.html';
   });
 

@@ -27,8 +27,8 @@
       </div>
       <div class="topbar-right">
         <span id="save-status" class="save-status"></span>
-        <button id="save-btn" class="btn btn-primary">Save Changes</button>
-        <button id="logout-btn" class="btn btn-ghost">Log Out</button>
+        <button type="button" id="save-btn" class="btn btn-primary">Save Changes</button>
+        <button type="button" id="logout-btn" class="btn btn-ghost">Log Out</button>
       </div>
     </header>
 
@@ -46,7 +46,7 @@
       <div class="toolbar">
         <div class="add-category-control">
           <select id="add-category-position" class="add-category-position-select"></select>
-          <button id="add-category-btn" class="btn btn-secondary">+ Add Category</button>
+          <button type="button" id="add-category-btn" class="btn btn-secondary">+ Add Category</button>
         </div>
         <p class="hint">Edit any field below, then click <strong>Save Changes</strong> to publish it to the live site.</p>
       </div>
@@ -60,11 +60,11 @@
     <section class="category-card">
       <div class="category-header">
         <input type="text" class="cat-title-input" placeholder="Category title, e.g. Beverages">
-        <input type="text" class="cat-id-input" placeholder="category-id (used internally)">
-        <button class="btn btn-danger btn-sm delete-category-btn">Delete Category</button>
+        <input type="hidden" class="cat-id-input">
+        <button type="button" class="btn btn-danger btn-sm delete-category-btn">Delete Category</button>
       </div>
       <div class="items-grid"></div>
-      <button class="btn btn-secondary add-item-btn">+ Add Item</button>
+      <button type="button" class="btn btn-secondary add-item-btn">+ Add Item</button>
     </section>
   </template>
 
@@ -82,9 +82,11 @@
         <input type="text" class="item-name-input" placeholder="Item name">
         <textarea class="item-desc-input" placeholder="Description (optional)" rows="2"></textarea>
 
-        <label class="checkbox-label">
-          <input type="checkbox" class="item-hasvariants-input"> This item has size/price options (e.g. Half &amp; Full)
-        </label>
+        <button type="button" class="options-toggle-btn" aria-expanded="false">
+          <span class="options-toggle-icon">+</span>
+          <span class="options-toggle-text">Add Options</span>
+        </button>
+        <input type="checkbox" class="item-hasvariants-input hidden" tabindex="-1" aria-hidden="true">
 
         <div class="item-row item-price-row">
           <label class="price-label">Rs. <input type="number" class="item-price-input" min="0" step="1"></label>
@@ -92,10 +94,13 @@
         </div>
 
         <label class="checkbox-label discount-toggle-label">
-          <input type="checkbox" class="item-discount-input"> 🏷️ Apply a discount (show old price crossed out)
+          <input type="checkbox" class="item-discount-input"> Old Price
         </label>
         <div class="item-row item-discount-row hidden">
-          <label class="price-label discount-price-label">Old Price Rs. <input type="number" class="item-oldprice-input" min="0" step="1"></label>
+          <label class="price-label discount-price-label">
+            <span>Rs.</span>
+            <input type="number" class="item-oldprice-input" min="0" step="1" placeholder="Enter old price" aria-label="Old price">
+          </label>
         </div>
 
         <div class="item-variants-section hidden">
@@ -111,14 +116,11 @@
           <input type="text" class="item-badge-input item-badge-input-variants" placeholder="Badge (optional), e.g. Best Seller">
         </div>
 
-        <label class="checkbox-label pricefrom-label">
-          <input type="checkbox" class="item-pricefrom-input"> Show price as "From"
-        </label>
         <label class="checkbox-label best-deal-label">
-          <input type="checkbox" class="item-bestdeal-input"> Hot Deals — Show this item in the Home Page "Our Hot Deals" section
+          <input type="checkbox" class="item-bestdeal-input"> Hot Deals
         </label>
       </div>
-      <button class="btn btn-danger btn-sm delete-item-btn">Delete</button>
+      <button type="button" class="btn btn-danger btn-sm delete-item-btn">Delete</button>
     </div>
   </template>
 
@@ -131,6 +133,6 @@
     </div>
   </template>
 
-  <script src="admin.js"></script>
+  <script src="admin.js?v=20260718b"></script>
 </body>
 </html>

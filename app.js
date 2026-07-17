@@ -209,6 +209,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 6. Render current cart state (badges, floating button, sticky bar, action buttons)
     updateCartUI();
+    if (new URLSearchParams(window.location.search).get('openCart') === '1') toggleCart();
 });
 
 function getBestDealItems() {
@@ -557,7 +558,18 @@ function showToast(message) {
 
 
 // --- Shopping Cart Logic ---
+const SHARED_CART_KEY = 'dominoFazilpurCart';
 let cart = [];
+try {
+    const savedCart = JSON.parse(localStorage.getItem(SHARED_CART_KEY) || '[]');
+    if (Array.isArray(savedCart)) cart = savedCart;
+} catch {
+    cart = [];
+}
+
+function persistCart() {
+    localStorage.setItem(SHARED_CART_KEY, JSON.stringify(cart));
+}
 
 // Returns the HTML for a product card's action area. Items with variants
 // (Half/Full etc.) always show a "+" that opens the variant picker in the
@@ -626,6 +638,7 @@ function addToCart(id, qty = 1, instructions = '', variantLabel = null) {
         cart.push({ cartKey: key, id, variant: variantLabel, name: displayName, price, qty, instructions: instructions || '' });
     }
     showToast('Item added to cart');
+    persistCart();
     updateCartUI();
 }
 
@@ -636,6 +649,7 @@ function updateQty(key, change) {
         if (item.qty <= 0) {
             cart = cart.filter(i => i.cartKey !== key);
         }
+        persistCart();
         updateCartUI();
     }
 }
@@ -933,6 +947,7 @@ function updateCartUI() {
     const cartBody = document.getElementById('cart-content');
     const cartFooter = document.getElementById('cart-footer-actions');
     const headerBadge = document.getElementById('cart-badge');
+    const floatingBadge = document.getElementById('menu-floating-cart-badge');
 
     // Keep every product card's +/stepper button in sync
     refreshCartActionButtons();
@@ -959,6 +974,10 @@ function updateCartUI() {
         cartFooter.innerHTML = '';
 
         if (headerBadge) headerBadge.style.display = 'none';
+        if (floatingBadge) {
+            floatingBadge.textContent = '0';
+            floatingBadge.setAttribute('aria-label', '0 items');
+        }
         return;
     }
 
@@ -1010,6 +1029,10 @@ function updateCartUI() {
     if (headerBadge) {
         headerBadge.style.display = 'flex';
         headerBadge.innerText = totalItems;
+    }
+    if (floatingBadge) {
+        floatingBadge.textContent = totalItems;
+        floatingBadge.setAttribute('aria-label', `${totalItems} item${totalItems === 1 ? '' : 's'}`);
     }
 }
 

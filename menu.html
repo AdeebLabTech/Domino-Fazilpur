@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/menu-page.css">
-    <link rel="stylesheet" href="assets/css/menu-layout-fix.css?v=20260718d">
+    <link rel="stylesheet" href="assets/css/menu-layout-fix.css?v=20260718e">
 </head>
 <body class="menu-page">
 
@@ -132,12 +132,6 @@
                     <li><a href="index.html#about">About</a></li>
                     <li><a href="menu.html" class="active">Menu</a></li>
                     <li><a href="index.html#testimonials">Testimonials</a></li>
-                    <li>
-                        <a href="#" onclick="toggleCart(); return false;">
-                            <i class="fa-solid fa-cart-shopping"></i> Cart
-                            <span id="cart-badge" style="display:none">0</span>
-                        </a>
-                    </li>
                     <li><a href="index.html#order" class="btn">Contact Us</a></li>
                 </ul>
             </nav>
@@ -184,6 +178,14 @@
     </div>
 
     <main class="menu-content" id="menu-grid"></main>
+
+    <button type="button" class="menu-floating-cart" id="menu-floating-cart" onclick="toggleCart()" aria-label="Open shopping cart">
+        <span class="menu-floating-cart-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M6.5 8.5h11l1 11h-13l1-11Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/><path d="M9.5 13h.01M14.5 13h.01"/></svg>
+        </span>
+        <span class="menu-floating-cart-badge" id="menu-floating-cart-badge" aria-label="0 items">0</span>
+        <span class="menu-floating-cart-label">Cart</span>
+    </button>
 
     <footer>
         <div class="container">
@@ -239,6 +241,6 @@
         </div>
     </footer>
 
-    <script src="app.js?v=20260718e"></script>
+    <script src="app.js?v=20260718g"></script>
 </body>
 </html>
