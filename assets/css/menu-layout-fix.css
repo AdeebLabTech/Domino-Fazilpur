@@ -1,5 +1,6 @@
 /* Final menu layout overrides — intentionally loaded after the shared theme. */
 .menu-page main#menu-grid.menu-content {
+  display: block;
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
