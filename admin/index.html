@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Menu Admin — Bell N Tell</title>
-<link rel="icon" href="/assets/favicon.ico?v=20260708b">
-<link rel="stylesheet" href="/admin/admin.css">
+<link rel="icon" href="../assets/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;500;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css?v=20260718">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate">Checking session…</div>
@@ -14,8 +17,9 @@
   <div id="app" class="app hidden">
     <header class="topbar">
       <div class="topbar-left">
-        <div class="logo-badge">HS</div>
+        <div class="logo-badge"><img src="../assets/images/Domino Fazilpur png logo.png" alt="Domino Fazilpur"></div>
         <div>
+          <span class="portal-label">Restaurant Portal</span>
           <h1>Menu Manager</h1>
           <p class="signed-in-as">Signed in as <span id="username-label"></span></p>
         </div>
@@ -30,6 +34,14 @@
     <div id="banner" class="banner hidden"></div>
 
     <main class="main">
+      <section class="admin-welcome">
+        <div>
+          <span class="welcome-kicker">Domino Fazilpur</span>
+          <h2>Keep your menu fresh.</h2>
+          <p>Update categories, dishes, prices and photos from one simple dashboard.</p>
+        </div>
+        <div class="welcome-stat"><strong>Live Menu</strong><span>Changes publish after saving</span></div>
+      </section>
       <div class="toolbar">
         <div class="add-category-control">
           <select id="add-category-position" class="add-category-position-select"></select>
@@ -118,6 +130,6 @@
     </div>
   </template>
 
-  <script src="/admin/admin.js"></script>
+  <script src="admin.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 :root {
-  --brand: #ff6b35;
-  --brand-dark: #e6551f;
-  --bg: #f6f6f7;
+  --brand: #f35f2a;
+  --brand-dark: #d44518;
+  --bg: #f7f4f1;
   --card: #ffffff;
   --text: #1c1c1e;
   --muted: #6b6b6f;
@@ -16,7 +16,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Catamaran', sans-serif;
 }
 
 .hidden { display: none !important; }
@@ -297,4 +297,150 @@ body {
   .topbar { padding: 12px 16px; }
   .main { padding: 16px 16px 80px; }
   .category-card { padding: 14px; }
+}
+
+/* Premium Domino Fazilpur admin theme */
+.auth-gate {
+  background: radial-gradient(circle at top, #fff 0, var(--bg) 65%);
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.topbar {
+  padding: 13px clamp(18px, 4vw, 52px);
+  border-bottom: 0;
+  box-shadow: 0 5px 24px rgba(35, 25, 19, .08);
+}
+
+.topbar-left { gap: 14px; }
+.logo-badge {
+  width: 56px;
+  height: 56px;
+  padding: 3px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+}
+.logo-badge img { width: 100%; height: 100%; display: block; object-fit: contain; }
+.portal-label { display: block; color: var(--brand); font-size: 10px; font-weight: 800; letter-spacing: 1.3px; text-transform: uppercase; }
+.topbar h1 { margin-top: 1px; font-size: 20px; line-height: 1.1; }
+.signed-in-as { font-size: 12px; }
+
+.btn {
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-family: inherit;
+  font-weight: 700;
+  transition: transform .2s, background .2s, box-shadow .2s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { box-shadow: 0 7px 18px rgba(243, 95, 42, .24); }
+.btn-ghost { background: #fff; }
+.btn-secondary { background: #fff3ed; color: var(--brand-dark); border: 1px solid #ffd8c8; }
+.btn-secondary:hover { background: #ffe5d9; }
+.btn-danger { border: 1px solid #f7d2d2; }
+.btn-sm { padding: 7px 12px; }
+
+.main { max-width: 1240px; padding: 34px 28px 100px; }
+.admin-welcome {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 24px;
+  padding: 30px 34px;
+  overflow: hidden;
+  color: #fff;
+  background: linear-gradient(110deg, #1f1f1f 0%, #303030 72%, #4b2518 100%);
+  border-radius: 20px;
+  box-shadow: 0 16px 34px rgba(27, 22, 19, .15);
+}
+.admin-welcome::after { content: ''; position: absolute; width: 220px; height: 220px; right: -70px; top: -110px; border: 35px solid rgba(243,95,42,.18); border-radius: 50%; }
+.admin-welcome > * { position: relative; z-index: 1; }
+.welcome-kicker { color: var(--brand); font-family: 'Dancing Script', cursive; font-size: 23px; }
+.admin-welcome h2 { margin: 2px 0 5px; font-size: 32px; line-height: 1.1; }
+.admin-welcome p { color: rgba(255,255,255,.7); font-size: 14px; }
+.welcome-stat { min-width: 190px; padding: 15px 18px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: 13px; backdrop-filter: blur(8px); }
+.welcome-stat strong, .welcome-stat span { display: block; }
+.welcome-stat strong { color: var(--brand); font-size: 16px; }
+.welcome-stat span { color: rgba(255,255,255,.68); font-size: 12px; }
+
+.toolbar {
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(35, 25, 19, .05);
+}
+.add-category-position-select { min-height: 40px; border-radius: 10px; font-family: inherit; }
+
+.banner { max-width: 1184px; margin: 20px auto 0; }
+.category-card {
+  padding: 22px;
+  margin-bottom: 24px;
+  border-color: #e9e2dd;
+  border-radius: 18px;
+  box-shadow: 0 9px 28px rgba(35, 25, 19, .06);
+}
+.category-header { gap: 12px; padding-bottom: 17px; margin-bottom: 18px; border-color: #eee8e4; }
+.cat-title-input, .cat-id-input, .item-name-input, .item-desc-input, .item-badge-input, .variant-label-input, .add-category-position-select {
+  color: var(--text);
+  background: #fcfbfa;
+  border: 1.5px solid var(--border);
+  transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.cat-title-input:focus, .cat-id-input:focus, .item-name-input:focus, .item-desc-input:focus, .item-badge-input:focus, .variant-label-input:focus, .add-category-position-select:focus {
+  outline: none;
+  border-color: var(--brand);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(243, 95, 42, .1);
+}
+.cat-title-input { padding: 11px 13px; font-size: 17px; }
+.cat-id-input { padding: 11px 13px; }
+
+.items-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+.item-card {
+  padding: 14px;
+  gap: 12px;
+  background: #fff;
+  border-color: #e9e3df;
+  border-radius: 15px;
+  box-shadow: 0 5px 18px rgba(35, 25, 19, .05);
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.item-card:hover { transform: translateY(-2px); border-color: rgba(243,95,42,.35); box-shadow: 0 12px 26px rgba(35,25,19,.09); }
+.item-photo { border-radius: 11px; background: #f3efec; }
+.photo-upload-label { padding: 8px 4px; background: linear-gradient(transparent, rgba(0,0,0,.78)); font-weight: 700; }
+.item-fields { gap: 10px; }
+.item-name-input, .item-desc-input, .item-badge-input { padding: 9px 11px; border-radius: 9px; }
+.price-label { min-height: 38px; background: #fcfbfa; border: 1.5px solid var(--border); border-radius: 9px; }
+.checkbox-label { padding: 3px 0; line-height: 1.35; }
+.checkbox-label input { accent-color: var(--brand); }
+.discount-toggle-label, .best-deal-label { color: var(--brand-dark); }
+.variant-row { padding: 8px; background: #faf7f5; border-radius: 10px; }
+
+@media (max-width: 760px) {
+  .topbar { align-items: flex-start; }
+  .topbar-right { width: 100%; justify-content: flex-end; }
+  .admin-welcome { align-items: flex-start; flex-direction: column; padding: 25px; }
+  .welcome-stat { width: 100%; }
+  .toolbar { align-items: flex-start; flex-direction: column; }
+  .add-category-control { width: 100%; flex-wrap: wrap; }
+  .add-category-position-select { flex: 1; max-width: none; }
+}
+
+@media (max-width: 560px) {
+  .main { padding: 20px 14px 90px; }
+  .topbar { padding: 12px 14px; }
+  .logo-badge { width: 48px; height: 48px; }
+  .topbar-right .save-status { display: none; }
+  .topbar-right .btn { flex: 1; padding-left: 12px; padding-right: 12px; }
+  .admin-welcome h2 { font-size: 27px; }
+  .category-card { padding: 14px; }
+  .items-grid { grid-template-columns: 1fr; }
 }
