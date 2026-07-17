@@ -231,6 +231,7 @@
 
     const itemHasVariants = Array.isArray(item.variants) && item.variants.length > 0;
     hasVariantsInput.checked = itemHasVariants;
+    let optionsPanelOpen = itemHasVariants;
     if (!itemHasVariants && !Array.isArray(item.variants)) item.variants = [];
 
     // --- Toggle between a single price field and the variants list ---
@@ -239,11 +240,11 @@
       priceRow.classList.toggle('hidden', on);
       discountToggleLabel.classList.toggle('hidden', on);
       discountRow.classList.toggle('hidden', on || !discountInput.checked);
-      variantsSection.classList.toggle('hidden', !on);
-      optionsToggleBtn.classList.toggle('active', on);
-      optionsToggleBtn.setAttribute('aria-expanded', String(on));
-      optionsToggleIcon.textContent = on ? '−' : '+';
-      optionsToggleText.textContent = on ? 'Remove Options' : 'Add Options';
+      variantsSection.classList.toggle('hidden', !on || !optionsPanelOpen);
+      optionsToggleBtn.classList.toggle('active', on && optionsPanelOpen);
+      optionsToggleBtn.setAttribute('aria-expanded', String(on && optionsPanelOpen));
+      optionsToggleIcon.textContent = on && optionsPanelOpen ? '−' : '+';
+      optionsToggleText.textContent = !on ? 'Add Options' : (optionsPanelOpen ? 'Hide Options' : 'Show Options');
     }
     syncVariantsVisibility();
 
@@ -270,6 +271,13 @@
         const idx = item.variants.indexOf(variant);
         if (idx !== -1) item.variants.splice(idx, 1);
         row.remove();
+        if (item.variants.length === 0) {
+          item.price = Number(variant.price) || 0;
+          priceInput.value = item.price;
+          hasVariantsInput.checked = false;
+          optionsPanelOpen = false;
+          syncVariantsVisibility();
+        }
       });
 
       return row;
@@ -302,12 +310,19 @@
     });
 
     optionsToggleBtn.addEventListener('click', () => {
-      hasVariantsInput.checked = !hasVariantsInput.checked;
-      hasVariantsInput.dispatchEvent(new Event('change', { bubbles: true }));
+      if (!hasVariantsInput.checked) {
+        hasVariantsInput.checked = true;
+        optionsPanelOpen = true;
+        hasVariantsInput.dispatchEvent(new Event('change', { bubbles: true }));
+        return;
+      }
+      optionsPanelOpen = !optionsPanelOpen;
+      syncVariantsVisibility();
     });
 
     hasVariantsInput.addEventListener('change', () => {
       if (hasVariantsInput.checked) {
+        optionsPanelOpen = true;
         if (item.variants.length === 0) {
           item.variants.push({ label: 'Half', price: item.price || 0 });
           item.variants.push({ label: 'Full', price: item.price || 0 });
@@ -317,6 +332,7 @@
         delete item.oldPrice;
         discountInput.checked = false;
       } else {
+        optionsPanelOpen = false;
         item.price = item.variants[0] ? item.variants[0].price : 0;
         item.variants = [];
         priceInput.value = item.price;
