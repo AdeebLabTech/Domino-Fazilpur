@@ -109,7 +109,8 @@ async function loadMenuData() {
 }
 
 // WhatsApp business number that orders are sent to at checkout.
-const WHATSAPP_NUMBER = "923441713141";
+// Restaurant WhatsApp: 0333 3103031 (international format for wa.me).
+const WHATSAPP_NUMBER = "923333103031";
 
 // --- Shared Header/Footer Loader ---
 // Fetches header.html (overlay, location modal, sidebars, main header)
@@ -1183,12 +1184,13 @@ async function sendOrderToWhatsApp({ name, phone, address, vehicle, plate, table
     const orderNumber = await getNextOrderNumber();
 
     let subtotal = 0;
-    const lines = cart.map(item => {
+    const lines = cart.map((item, index) => {
         const lineTotal = item.price * item.qty;
         subtotal += lineTotal;
-        const note = item.instructions ? ` (Note: ${item.instructions})` : '';
-        return `- ${item.name} x${item.qty} = Rs. ${lineTotal}${note}`;
-    }).join('\n');
+        const variant = item.variantLabel ? ` (${item.variantLabel})` : '';
+        const note = item.instructions ? `\n   Note: ${item.instructions}` : '';
+        return `${index + 1}. *${item.name}${variant}*\n   ${item.qty} x Rs. ${item.price} = *Rs. ${lineTotal}*${note}`;
+    }).join('\n\n');
 
     const tax = Math.round(subtotal * 0.15);
     const grandTotal = subtotal + tax;
@@ -1197,29 +1199,40 @@ async function sendOrderToWhatsApp({ name, phone, address, vehicle, plate, table
 
     let detailLines = '';
     if (orderType === 'Delivery' && address) {
-        detailLines = `Delivery Address: ${address}\n`;
+        detailLines = `*Delivery Address:*\n${address}\n`;
     } else if (orderType === 'Car hop') {
-        detailLines = `Vehicle: ${vehicle}\nNumber Plate: ${plate}\n`;
+        detailLines = `*Vehicle:* ${vehicle}\n*Number Plate:* ${plate}\n`;
     } else if (orderType === 'Dine-In') {
-        detailLines = `Table Number: ${table}\n`;
+        detailLines = `*Table Number:* ${table}\n`;
     }
 
-    const message =
-`New Order Request - Bell N Tell
+    const placedAt = new Date().toLocaleString('en-PK', {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+    });
 
-Order #${orderNumber}
-Customer Name: ${name}
-Phone: ${phone}
-Order Type: ${orderType}
+    const message =
+`*NEW ORDER - DOMINO FAZILPUR*
+--------------------------------
+*Order #:* ${orderNumber}
+*Date & Time:* ${placedAt}
+
+*CUSTOMER DETAILS*
+*Name:* ${name}
+*Phone:* ${phone}
+*Order Type:* ${orderType}
 ${detailLines}
-Items:
+*ORDER ITEMS*
 ${lines}
 
-Total: Rs. ${subtotal}
-Tax (15%): Rs. ${tax}
-Grand Total: Rs. ${grandTotal}
+--------------------------------
+*Subtotal:* Rs. ${subtotal}
+*Tax (15%):* Rs. ${tax}
+*GRAND TOTAL: Rs. ${grandTotal}*
 
-${readyPlain}`;
+*Estimated Time:* ${readyPlain}
+
+Please confirm this order. Thank you!`;
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     if (whatsappTab) {

@@ -209,10 +209,14 @@
 
         <div class="showcase-heading">
           <h2>Pizzas &amp; Burgers</h2>
-          <a href="menu.html">See All Products</a>
+          <div class="showcase-heading-actions">
+            <button type="button" class="showcase-scroll-btn" id="home-products-prev" aria-label="Scroll products left"><i class="fa-solid fa-arrow-left"></i></button>
+            <button type="button" class="showcase-scroll-btn" id="home-products-next" aria-label="Scroll products right"><i class="fa-solid fa-arrow-right"></i></button>
+            <a href="menu.html">See All Products</a>
+          </div>
         </div>
 
-        <div class="product-grid">
+        <div class="product-grid home-category-products" id="home-category-products">
           <article class="product-card home-menu-link" onclick="window.location.href='menu.html'" onkeydown="if(event.key==='Enter'||event.key===' ') window.location.href='menu.html'" role="link" tabindex="0">
             <div class="product-image">
               <img
@@ -532,7 +536,7 @@
               <div class="testimonial-author-img">
                 <!-- Author profile image -->
                 <img loading="lazy" decoding="async"
-                  src="https://ui-avatars.com/api/?name=Ali+Raza&background=f35f2a&color=fff&bold=true"
+                  src="assets/images/customer-ali-raza.png"
                   alt="Ali Raza"
                 />
               </div>
@@ -576,7 +580,7 @@
               <div class="testimonial-author-img">
                 <!-- Author profile image -->
                 <img loading="lazy" decoding="async"
-                  src="https://ui-avatars.com/api/?name=Ayesha+Khan&background=111827&color=fff&bold=true"
+                  src="assets/images/customer-ayesha-khan.png"
                   alt="Ayesha Khan"
                 />
               </div>
@@ -620,7 +624,7 @@
               <div class="testimonial-author-img">
                 <!-- Author profile image -->
                 <img loading="lazy" decoding="async"
-                  src="https://ui-avatars.com/api/?name=Muhammad+Usman&background=25d366&color=fff&bold=true"
+                  src="assets/images/customer-muhammad-usman.png"
                   alt="Muhammad Usman"
                 />
               </div>
@@ -1081,6 +1085,7 @@
 
     <!-- JavaScript file link -->
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/home-category-products.js?v=20260718c"></script>
     <!-- End of body section -->
   </body>
   <!-- End of HTML document -->

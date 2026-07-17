@@ -4,7 +4,7 @@
   "private": true,
   "description": "Bell N Tell website with an admin panel for managing the menu (Vercel Functions + Vercel Blob storage).",
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "dependencies": {
     "@vercel/blob": "^2.5.0"
