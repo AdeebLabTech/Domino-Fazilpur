@@ -25,14 +25,13 @@
           <p class="signed-in-as">Signed in as <span id="username-label"></span></p>
         </div>
       </div>
+      <div id="banner" class="banner header-banner hidden" role="status" aria-live="polite"></div>
       <div class="topbar-right">
         <span id="save-status" class="save-status"></span>
         <button type="button" id="save-btn" class="btn btn-primary">Save Changes</button>
         <button type="button" id="logout-btn" class="btn btn-ghost">Log Out</button>
       </div>
     </header>
-
-    <div id="banner" class="banner hidden"></div>
 
     <main class="main">
       <section class="admin-welcome">
@@ -61,6 +60,10 @@
       <div class="category-header">
         <input type="text" class="cat-title-input" placeholder="Category title, e.g. Beverages">
         <input type="hidden" class="cat-id-input">
+        <div class="category-order-controls" aria-label="Change category position">
+          <button type="button" class="category-move-btn move-category-up" title="Move category up" aria-label="Move category up">↑ <span>Up</span></button>
+          <button type="button" class="category-move-btn move-category-down" title="Move category down" aria-label="Move category down">↓ <span>Down</span></button>
+        </div>
         <button type="button" class="btn btn-danger btn-sm delete-category-btn">Delete Category</button>
       </div>
       <div class="items-grid"></div>

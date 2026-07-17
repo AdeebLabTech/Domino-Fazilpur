@@ -118,10 +118,14 @@
     const idInput = node.querySelector('.cat-id-input');
     const itemsGrid = node.querySelector('.items-grid');
     const addItemBtn = node.querySelector('.add-item-btn');
+    const moveUpBtn = node.querySelector('.move-category-up');
+    const moveDownBtn = node.querySelector('.move-category-down');
     const deleteCategoryBtn = node.querySelector('.delete-category-btn');
 
     titleInput.value = category.title || '';
     idInput.value = category.categoryId || '';
+    moveUpBtn.disabled = catIndex === 0;
+    moveDownBtn.disabled = catIndex === menuData.length - 1;
 
     titleInput.addEventListener('input', () => {
       category.title = titleInput.value;
@@ -163,11 +167,26 @@
       showBanner('New item added. Complete its details, then click Save Changes.', 'success');
     });
 
+    function moveCategory(direction) {
+      const currentIndex = menuData.indexOf(category);
+      const nextIndex = currentIndex + direction;
+      if (currentIndex < 0 || nextIndex < 0 || nextIndex >= menuData.length) return;
+      menuData.splice(currentIndex, 1);
+      menuData.splice(nextIndex, 0, category);
+      renderAll();
+      const movedNode = container.children[nextIndex];
+      if (movedNode) movedNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showBanner('Category order changed. Click Save Changes to publish this order on the menu.', 'success');
+    }
+
+    moveUpBtn.addEventListener('click', () => moveCategory(-1));
+    moveDownBtn.addEventListener('click', () => moveCategory(1));
+
     deleteCategoryBtn.addEventListener('click', () => {
       if (!confirm(`Delete category "${category.title || category.categoryId}" and all its items?`)) return;
       const idx = menuData.indexOf(category);
       if (idx !== -1) menuData.splice(idx, 1);
-      node.remove();
+      renderAll();
     });
 
     return node;
