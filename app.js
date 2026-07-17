@@ -122,7 +122,7 @@ async function loadHeader() {
     if (!placeholder) return;
 
     try {
-        const response = await fetch('header.html?v=20260704d', { cache: 'no-cache' });
+        const response = await fetch('header.html?v=20260717a', { cache: 'no-cache' });
         const html = await response.text();
         placeholder.innerHTML = html;
         unwrapPlaceholder(placeholder);
@@ -136,7 +136,7 @@ async function loadFooter() {
     if (!placeholder) return;
 
     try {
-        const response = await fetch('footer.html?v=20260704d', { cache: 'no-cache' });
+        const response = await fetch('footer.html?v=20260717a', { cache: 'no-cache' });
         const html = await response.text();
         placeholder.innerHTML = html;
         unwrapPlaceholder(placeholder);
@@ -146,11 +146,11 @@ async function loadFooter() {
 }
 
 // Replaces a wrapper element with its own children, so the injected
-// header/footer markup (e.g. .main-header) becomes a direct child of
+// header/footer markup (e.g. <header>) becomes a direct child of
 // <body> instead of being nested inside a placeholder <div>. This matters
 // because Chromium's handling of <body>'s propagated overflow can break
 // position: sticky for elements nested an extra level deep - moving
-// .main-header up to sit alongside .menu-controls (which is a direct
+// the site header up to sit alongside .menu-controls (which is a direct
 // child of body) keeps both stuck to the top correctly while scrolling.
 function unwrapPlaceholder(placeholder) {
     const parent = placeholder.parentNode;
@@ -204,6 +204,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 5. Keep the category/search bar pinned directly beneath the header,
     // even if the header's real height differs from any fixed assumption.
     initStickyHeaderOffset();
+    initMobileNav();
 
     // 6. Render current cart state (badges, floating button, sticky bar, action buttons)
     updateCartUI();
@@ -354,11 +355,11 @@ function initCategoryScrollSpy() {
 }
 
 // Keeps .menu-controls (category nav + search) pinned directly below the
-// real, rendered height of .main-header, instead of relying on a fixed
+// real, rendered height of the site header, instead of relying on a fixed
 // top offset that could drift out of sync (which previously caused the
 // header to appear to "disappear" behind the sticky nav while scrolling).
 function initStickyHeaderOffset() {
-    const header = document.querySelector('.main-header');
+    const header = document.querySelector('header');
     if (!header) return;
 
     const setOffset = () => {
@@ -371,6 +372,24 @@ function initStickyHeaderOffset() {
     } else {
         window.addEventListener('resize', setOffset);
     }
+}
+
+function initMobileNav() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('nav');
+    if (!navToggle || !nav) return;
+
+    navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        nav.classList.toggle('active');
+    });
+
+    document.querySelectorAll('nav a').forEach((link) => {
+        link.addEventListener('click', () => {
+            navToggle.classList.remove('active');
+            nav.classList.remove('active');
+        });
+    });
 }
 
 // True when a plain (non-variant) item has a valid discount configured -
