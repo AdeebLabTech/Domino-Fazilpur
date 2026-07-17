@@ -117,10 +117,13 @@ svg.icon { width: 18px; height: 18px; stroke: currentColor; stroke-width: var(--
 .category-nav a:hover { color: var(--brand-green); }
 .category-nav a.active-category { background: #eafaf0; color: var(--brand-green); border: 1px solid var(--brand-green); }
 .search-container { padding: 16px 32px; display: flex; justify-content: center; }
-.search-box { display: flex; align-items: center; border: 1.5px solid var(--brand-green); border-radius: 25px; padding: 4px 4px 4px 16px; width: 100%; max-width: 480px; gap: 8px; }
-.search-box input { flex: 1; border: none; outline: none; font-size: 0.9rem; padding: 6px 0; font-family: inherit; }
-.search-icon { color: var(--text-muted); display: flex; }
-.search-btn { background: var(--brand-green); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.search-box { display: flex; align-items: center; border: 2px solid var(--brand-green); border-radius: 50px; padding: 5px 5px 5px 18px; width: 100%; max-width: 500px; gap: 10px; background: var(--white); box-shadow: 0 2px 12px rgba(255,107,53,0.12); transition: box-shadow 0.25s ease, border-color 0.25s ease; }
+.search-box:focus-within { box-shadow: 0 4px 20px rgba(255,107,53,0.22); border-color: var(--brand-green); }
+.search-box input { flex: 1; border: none; outline: none; font-size: 0.95rem; padding: 8px 4px; font-family: inherit; color: var(--text-dark); background: transparent; }
+.search-box input::placeholder { color: #aaa; font-weight: 500; }
+.search-icon { color: var(--brand-green); display: flex; align-items: center; }
+.search-btn { background: var(--brand-green); color: white; border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s, transform 0.2s; box-shadow: 0 2px 8px rgba(255,107,53,0.3); }
+.search-btn:hover { background: var(--primary-dark, #e65a2a); transform: scale(1.05); }
 
 /* --- Menu Grid Layout --- */
 .menu-content { padding: 32px; max-width: var(--content-max); margin: 0 auto; }
