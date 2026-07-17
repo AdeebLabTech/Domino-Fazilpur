@@ -457,10 +457,12 @@ function renderMenuGrid() {
         section.id = category.categoryId;
 
         const itemsHtml = category.items.map(renderProductCardHTML).join('');
-        const catImage = CATEGORY_IMAGES[category.categoryId];
-        const headerHtml = catImage
-            ? `<div class="category-header"><img class="category-header-img" src="${imageSrc(catImage)}" alt="${category.title}"><h2>${category.title}</h2></div>`
-            : `<h2>${category.title}</h2>`;
+        const headerHtml = `<div class="category-header">
+            <span class="category-header-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M7 3v7M4.5 3v4.5A2.5 2.5 0 0 0 7 10m0 0v11M15 3v18m0-18c3 1.2 4.5 3.6 4.5 6.5S18 14 15 15"/></svg>
+            </span>
+            <div><span class="category-header-label">Our Menu</span><h2>${category.title}</h2></div>
+        </div>`;
         section.innerHTML = `${headerHtml}<div class="product-grid">${itemsHtml}</div>`;
         gridContainer.appendChild(section);
     });
