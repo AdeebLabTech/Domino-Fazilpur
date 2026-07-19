@@ -27,6 +27,22 @@ html[data-theme="dark"] body { color: #f4f1ef; background: #121212; }
 html[data-theme="dark"] header.scrolled { background: rgba(24,24,24,.96); box-shadow: 0 5px 20px rgba(0,0,0,.35); }
 html[data-theme="dark"] header.scrolled nav ul li a { color: #f3f0ed; }
 html[data-theme="dark"] header.scrolled .theme-toggle { color: #fff; background: #2b2928; border-color: #47413e; }
+html[data-theme="dark"] .menu-page header,
+html[data-theme="dark"] .menu-page header.scrolled {
+  background: rgba(18,18,18,.96);
+  border-bottom: 1px solid #332f2c;
+  box-shadow: 0 6px 22px rgba(0,0,0,.34);
+  backdrop-filter: blur(12px);
+}
+html[data-theme="dark"] .menu-page header nav ul li a { color: #f4f1ee; }
+html[data-theme="dark"] .menu-page header nav ul li a:hover,
+html[data-theme="dark"] .menu-page header nav ul li a.active { color: #ff7542; }
+html[data-theme="dark"] .menu-page header .nav-toggle span { background: #fff; }
+html[data-theme="dark"] .menu-page header .theme-toggle {
+  color: #fff;
+  background: #292725;
+  border-color: #4a4440;
+}
 html[data-theme="dark"] section:not(.hero):not(.menu-hero),
 html[data-theme="dark"] .menu-page,
 html[data-theme="dark"] .menu-content { background-color: #121212; }
@@ -64,6 +80,10 @@ html[data-theme="dark"] .order-now {
 html[data-theme="dark"] .about,
 html[data-theme="dark"] .testimonials,
 html[data-theme="dark"] .order-now { background: #1a1918; }
+html[data-theme="dark"] .about-owner { background: #30241f; border-left-color: #ff7542; }
+html[data-theme="dark"] .about-owner span { color: #ff8a5f; }
+html[data-theme="dark"] .about-owner strong { color: #f8f5f2; }
+html[data-theme="dark"] .about-image img { border-color: #2a2725; box-shadow: 0 20px 48px rgba(0,0,0,.42); }
 html[data-theme="dark"] .service-item h3,
 html[data-theme="dark"] .showcase-heading h2,
 html[data-theme="dark"] .category-card h3,
