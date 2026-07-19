@@ -81,9 +81,23 @@ html[data-theme="dark"] .testimonial-text,
 html[data-theme="dark"] .testimonials .section-title p,
 html[data-theme="dark"] .order-details p,
 html[data-theme="dark"] .form-header p { color: #c9c2bd; }
+html[data-theme="dark"] .hot-deals .section-title p {
+  color: #d8d1cc;
+}
+html[data-theme="dark"] .hot-deals .dish-card {
+  color: #f6f2ef;
+  background: #242220;
+  border: 1px solid #403b38;
+  box-shadow: 0 12px 28px rgba(0,0,0,.3);
+}
+html[data-theme="dark"] .hot-deals .dish-content h3 { color: #f8f5f2; }
+html[data-theme="dark"] .hot-deals .dish-content p { color: #c3bbb5; }
+html[data-theme="dark"] .hot-deals .dish-rating span { color: #bcb3ad; }
+html[data-theme="dark"] .hot-deals .dish-footer { border-top-color: #403b38; }
 html[data-theme="dark"] .category-card,
 html[data-theme="dark"] .menu-item,
 html[data-theme="dark"] .testimonial-item,
+html[data-theme="dark"] .order-info,
 html[data-theme="dark"] .order-form,
 html[data-theme="dark"] .order-item,
 html[data-theme="dark"] .home-category-product-card {
@@ -105,6 +119,25 @@ html[data-theme="dark"] .order-form textarea {
   border-color: #4a4440;
 }
 html[data-theme="dark"] .radio-checkmark { background: #191817; border-color: #625a54; }
+html[data-theme="dark"] .order-now .section-title p { color: #d2cbc6; }
+html[data-theme="dark"] .order-info-header { border-bottom-color: #49423e; }
+html[data-theme="dark"] .food-icon-divider span {
+  color: #ff7542;
+  background: #242220;
+}
+html[data-theme="dark"] .order-item {
+  background: #1c1b1a;
+  border: 1px solid #3c3734;
+}
+html[data-theme="dark"] .order-item:hover {
+  background: #30241f;
+  border-color: rgba(243,95,42,.5);
+}
+html[data-theme="dark"] .order-icon {
+  color: #ff7542;
+  background: rgba(243,95,42,.16);
+  border: 1px solid rgba(243,95,42,.3);
+}
 
 /* High-contrast dark palette for the menu, cart and dialogs */
 html[data-theme="dark"] .menu-page .menu-controls,
